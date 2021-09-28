@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useSpring, animated, config } from "react-spring";
 import "./style.css";
 
@@ -32,16 +32,32 @@ import "./style.css";
 // }
 
 export default function FlippeImg() {
-  const [flipped, setFlipped] = useState(false);
-  const style = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
+  const n = useRef(0);
+  // const [n, setN] = useState(0);
+  const styles = useSpring({
+    loop: () => {
+      console.log(n.current);
+      // setN((n) => n + 1);
+      ++n.current;
+      if (3 > n.current) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    from: { x: 0 },
+    to: { x: 100 },
   });
 
   return (
-    <div onClick={() => setFlipped(!flipped)}>
-      <animated.div className="c back" style={style} />
-      <animated.div className="c front" style={style} />
-    </div>
+    <animated.div
+      style={{
+        width: 80,
+        height: 80,
+        backgroundColor: "#46e891",
+        borderRadius: 16,
+        ...styles,
+      }}
+    />
   );
 }
