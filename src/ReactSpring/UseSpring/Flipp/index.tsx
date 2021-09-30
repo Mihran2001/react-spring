@@ -32,14 +32,20 @@ import "./style.css";
 // }
 
 export default function FlippeImg() {
-  const n = useRef(0);
-  // const [n, setN] = useState(0);
+  // const n = useRef(0);
+  const [n, setN] = useState(0);
+
   const styles = useSpring({
     loop: () => {
-      console.log(n.current);
-      // setN((n) => n + 1);
-      ++n.current;
-      if (3 > n.current) {
+      // console.log(n.current);
+      // console.log(n);
+
+      // ++n.current;
+      if (3 > n) {
+        setN((prev) => {
+          // console.log(prev);
+          return prev + 1;
+        });
         return true;
       } else {
         return false;
@@ -48,6 +54,7 @@ export default function FlippeImg() {
     from: { x: 0 },
     to: { x: 100 },
   });
+  // console.log(n);
 
   return (
     <animated.div
